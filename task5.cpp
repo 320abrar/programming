@@ -1,137 +1,61 @@
 #include<iostream>
-#include<windows.h>
 using namespace std;
-void printmaiz();
-void gotoxy(int x,int y);
-char getcharAtxy(short int x,short int y);
-void erase(int x,int y);
-void printpac(int x,int y);
+float pool(float volume,float p1,float p2,float hours);
+float contribution(float result,float p,float volume,float hours);
+void overflow(float filled,float volume,float hours);
 main()
-{  
- system("cls");
- int x = 30, y = 17;
-//  int x,y;
-//  cout<<"enter X";
-//  cin>>x;
-//  cout<<"enter Y";
-//  cin>>y;
- bool gameRunning=true;
-  printmaiz();
-printpac(x,y);
- erase(x,y);
- while(gameRunning)
- {
-    if(GetAsyncKeyState(VK_LEFT))
-    {
-        char nextLocation=getcharAtxy(x-1,y);
-        if(nextLocation == ' '|| nextLocation == '.')
-        {
-        erase(x,y);
-        x=x-1;
-        printpac(x,y);
-        }
-    }
-     if(GetAsyncKeyState(VK_RIGHT))
-    {
-        char nextLocation=getcharAtxy(x+ 1,y);
-        if(nextLocation == ' '|| nextLocation == '.')
-        {
-        erase(x,y);
-        x=x+1;
-        printpac(x,y);
-        }
-    }
-     if(GetAsyncKeyState(VK_UP))
-    {
-        char nextLocation=getcharAtxy(x,y-1);
-        if(nextLocation == ' '|| nextLocation == '.')
-        {
-        erase(x,y);
-        y=y-1;
-        printpac(x,y);
-        }
-    }
-     if(GetAsyncKeyState(VK_DOWN))
-    {
-        char nextLocation=getcharAtxy(x,y+1);
-        if(nextLocation == ' '|| nextLocation == '.')
-        {
-        erase(x,y);
-        y=y+1;
-        printpac(x,y);
-        }
-
-    }
-    if(GetAsyncKeyState(VK_ESCAPE))
-    {
-        gameRunning=false;
-    }
-        Sleep(200);
-}
-
- }
- 
-
-void printmaiz()
 {
-cout<<"    #################################################################################################"<<endl;                                                                                                                                                                                     
-cout<<"    ||.. ...............................................................................   .....   ||"<<endl;                                                                                                                                                  
-cout<<"    ||.. %%%%%%%%%%%%%%%%%%%%%%%            ...          %%%%%%%%%%%%%%%%%%%%%%%   |%|..   %%%%    ||"<<endl;                                                                                                                                             
-cout<<"    ||..              |%|    |%|         |%|...          |%|                 |%|   |%|..    |%|    ||"<<endl;                                                                                                               
-cout<<"    ||..              |%|    |%|         |%|...          |%|                 |%|   |%|..    |%|    ||"<<endl;                      
-cout<<"    ||..              %%%%%%%%%%%    . . |%|...          %%%%%%%%%%%%%%%%%%%%%%%      ..   %%%%.   ||"<<endl; 
-cout<<"    ||..              |%|            . . |%|...          .......................  |%| ..       .   ||"<<endl; 
-cout<<"    ||..              %%%%%%%%%%%%%%%. . |%|...          %%%%%%%%%%%%%%%%%%%%     |%| ..   %%%%.   ||"<<endl; 
-cout<<"    ||..                          |%|.                   |%|..............        |%| ..    |%|.   ||"<<endl; 
-cout<<"    ||..           .............. |%|.                   |%|..............|%|         ..    |%|.   ||"<<endl; 
-cout<<"    ||..|%|        |%|%%%%%%%%|%|.|%|. |%|                  ..............|%|         ..|%| |%|.   ||"<<endl; 
-cout<<"    ||..|%|        |%|        |%|..    %%%%%%%%%%%%%%%%%%   ..............|%|          .|%|.       ||"<<endl; 
-cout<<"    ||..|%|        |%|        |%|..                ...|%|           %%%%%%%%%         . |%|.       ||"<<endl; 
-cout<<"    ||..|%|                       .                ...|%|                         |%| ..|%|.       ||"<<endl; 
-cout<<"    ||..|%|        %%%%%%%%%%%%%%%%%%%             ...|%|%%%%%%%%%%%%%%%%%%       |%| ..|%|%%%%%   ||"<<endl; 
-cout<<"    ||........................................................................    |%| ..........   ||"<<endl; 
-cout<<"    ||..     .................................................................           .......   ||"<<endl; 
-cout<<"    ||..|%|        |%|        |%|..   %%%%%%%%%%%%%%%%%%%    .............|%|     |%| ..|%|.       ||"<<endl; 
-cout<<"    ||..|%|        |%|        |%|..                ...|%|         %%%%%%%%%%%     |%| ..|%|.       ||"<<endl; 
-cout<<"    ||..|%|                       .                ...|%|                         |%| ..|%|.       ||"<<endl; 
-cout<<"    ||..|%|        %%%%%%%%%%%%%%%                 ...|%|%%%%%%%%%%%%%%%          |%| ..|%|%%%%%   ||"<<endl; 
-cout<<"    ||........................................................................    |%| ..........   ||"<<endl; 
-cout<<"    ||........................................................................           .......   ||"<<endl; 
-cout<<"    ################################################################################################"<<endl;
- }
-void gotoxy(int x,int y)
-{
-COORD coordinates;
-coordinates.X=x;
-coordinates.Y=y;
-SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coordinates);
+    float volume;
+    cout<<"eneter volume";
+    cin>>volume;
+    float p1;
+    cout<<"enter the flow rate of pipe 1:";
+    cin>>p1;
+    float p2;
+     cout<<"enter the flow rate of pipe 2:";
+     cin>>p2;
+     float hours;
+     cout<<"enter the hours during the worker is absent:";
+     cin>>hours;
+     float result;
+     result=pool( volume, p1, p2,hours);
+     cout<<result<<"%";
+     float filled=((p1+p2))*hours;
+   
+     float result1=contribution(result,p1,volume,hours);
+     cout<<"contribution of pipe 1 is:"<<result1<<endl;
+     
+     float result2=contribution(result,p2,volume,hours);
+     cout<<"contribution of pipe 2 is:"<<result2;
+     
+    overflow(filled ,volume,hours);
 }
- 
-    void printpac(int x,int y)
-{
+     float pool(float volume,float p1,float p2,float hours)
+     {
+     float poolfilled;
+     float filled;
+     filled=((p1+p2))*hours;
+      poolfilled=((p1+p2)/volume)*hours*100;
+     
+     return poolfilled;
+     }
+     void overflow(float filled,float volume,float hours)
+     {
+     if(filled>volume)
+     {
+      cout<<"the pool has overflown with "<<filled<<"litters"<<"in "<<hours<<"hours";
+     
+     }
 
- gotoxy(x,y);
- cout<<"p";
- Sleep(500);
-    
-}
- void erase(int x,int y)
- {
+     }
+     float contribution(float result,float p,float volume ,float hours)
+     {
+      
+        float contribution1;
+        cout<<result<<"test"<<p<<endl;
+     contribution1=((hours*p)/(result))*10;
+     return contribution1;
+     
 
- gotoxy(x,y);
- cout<<" ";
- y=y-1;
 
- }
-
- 
- char getcharAtxy(short int x,short int y)
- {
-    CHAR_INFO ci;
-    COORD xy={0,0};
-    SMALL_RECT rect={x,y,x,y};
-    COORD coordBufsize;
-    coordBufsize.X=1;
-    coordBufsize.Y=1;
-    return ReadConsoleOutput(GetStdHandle(STD_OUTPUT_HANDLE),&ci,coordBufsize,xy,&rect) ? ci. Char.AsciiChar : ' ';
- }
+     }
