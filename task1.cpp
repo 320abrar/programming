@@ -1,34 +1,49 @@
 #include<iostream>
-#include<windows.h>
 using namespace std;
-int add(int number1,int number2);
-float division(int number1,int number2);
+char cal(int marks);
 main()
 {
-system("cls");
-int number1;
-int number2;
-float result;
-cout<<"enter first no";
-cin>>number1;
-cout<<"enter second no";
-cin>>number2;
-result=add(number1,number2);
-cout<<result<<endl;
-result=division(number1,number2);
-cout<<result;
-}
-int add(int number1,int number2)
-{
-int sum;
-sum=number1+number2;
+    int marks;
+    cout<<"Apny marks bataoo";
+    cin>>marks;
+    char result=cal(marks);
+    cout<<result;
 
-return  sum;
 }
-float division(int number1,int number2)
+char cal(int marks)
 {
-float divide;
-divide=number1/number2;
+     char grade;
+    if(marks>85)
+    {
+       
+        grade='A';
+        cout<<"your grade is";
+    }
+    else if(marks<85 && marks>=81)
+    {
+        grade='B';
+        cout<<"your grade is";
+    }
+    else if(marks<81 && marks>=71)
+    {
+        grade='C';
+        cout<<"your grade is";
+    }
+    else if(marks<70 && marks>=61)
+     {
 
-return divide;
+        grade='D';
+        cout<<"your grade is";
+     }
+     else if(marks<60 && marks>=50)
+     {
+        grade='E';
+        cout<<"your grade is";
+     }
+     else 
+     {
+        grade='F';
+        cout<<"your grade is";
+     }
+     return grade;
 }
